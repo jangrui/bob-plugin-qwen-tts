@@ -1,6 +1,6 @@
 {
     "identifier": "com.qwen.tts.bob.plugin",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "category": "tts",
     "name": "Qwen TTS",
     "summary": "使用阿里云 Qwen3-TTS-Flash 模型进行语音合成",
@@ -43,7 +43,7 @@
             "type": "menu",
             "title": "模型",
             "defaultValue": "qwen3-tts-flash",
-            "desc": "选择 TTS 模型",
+            "desc": "选择 TTS 模型。注：部分新音色仅支持 Flash 模型，如选择旧模型会自动切换",
             "menuValues": [
                 {
                     "title": "Qwen3-TTS-Flash (推荐)",
@@ -60,147 +60,223 @@
             "type": "menu",
             "title": "语音角色",
             "defaultValue": "Ethan",
-            "desc": "选择语音角色（支持49种音色）",
+            "desc": "选择语音角色（支持45+种官方音色）",
             "menuValues": [
                 {
-                    "title": "【普通话男声】",
+                    "title": "【精选推荐】",
                     "value": "_separator_1"
                 },
                 {
-                    "title": "★ Ethan/晨煦 (阳光温暖-标准普通话)",
+                    "title": "Ethan/晨煦 (男-阳光温暖标准音)",
                     "value": "Ethan"
                 },
                 {
-                    "title": "Ryan/甜茶 (节奏感强-戏感丰富)",
-                    "value": "Ryan"
-                },
-                {
-                    "title": "Elias/墨讲师 (严谨叙事-讲师风格)",
-                    "value": "Elias"
-                },
-                {
-                    "title": "Neil/尼尔 (深沉磁性)",
-                    "value": "Neil"
-                },
-                {
-                    "title": "【普通话女声】",
-                    "value": "_separator_2"
-                },
-                {
-                    "title": "Cherry/芊悦 (阳光积极-亲切自然)",
+                    "title": "Cherry/芊悦 (女-阳光积极亲切)",
                     "value": "Cherry"
                 },
                 {
-                    "title": "Serena/苏瑶 (温柔)",
+                    "title": "Serena/苏瑶 (女-温柔舒缓)",
                     "value": "Serena"
                 },
                 {
-                    "title": "Chelsie/千雪 (二次元虚拟女友)",
+                    "title": "Chelsie/千雪 (女-二次元女友)",
                     "value": "Chelsie"
                 },
                 {
-                    "title": "Maia/四月 (知性与温柔)",
+                    "title": "【普通话-女声】",
+                    "value": "_separator_2"
+                },
+                {
+                    "title": "Maia/四月 (知性温柔)",
                     "value": "Maia"
                 },
                 {
-                    "title": "Katerina/卡捷琳娜 (御姐-韵律回味)",
+                    "title": "Vivian/十三 (拽拽的可爱)",
+                    "value": "Vivian"
+                },
+                {
+                    "title": "Momo/茉兔 (撒娇搞怪)",
+                    "value": "Momo"
+                },
+                {
+                    "title": "Nini/邻家妹妹 (甜美黏人)",
+                    "value": "Nini"
+                },
+                {
+                    "title": "Stella/少女阿月 (中二/正义)",
+                    "value": "Stella"
+                },
+                {
+                    "title": "Ono Anna/小野杏 (鬼灵精怪)",
+                    "value": "Ono Anna"
+                },
+                {
+                    "title": "Seren/小婉 (哄睡/舒缓)",
+                    "value": "Seren"
+                },
+                {
+                    "title": "Mia/乖小妹 (温顺乖巧)",
+                    "value": "Mia"
+                },
+                {
+                    "title": "Bella/萌宝 (可爱小萝莉)",
+                    "value": "Bella"
+                },
+                {
+                    "title": "Bunny/萌小姬 (萌属性爆棚)",
+                    "value": "Bunny"
+                },
+                {
+                    "title": "Bellona/燕铮莺 (金戈铁马/活力)",
+                    "value": "Bellona"
+                },
+                {
+                    "title": "Katerina/卡捷琳娜 (御姐/韵律感)",
                     "value": "Katerina"
                 },
                 {
-                    "title": "Jennifer/詹妮弗 (电影质感美语女声)",
-                    "value": "Jennifer"
+                    "title": "Elias/墨讲师 (严谨/叙事)",
+                    "value": "Elias"
                 },
                 {
-                    "title": "Nofish/不吃鱼 (不翘舌-设计师风格)",
-                    "value": "Nofish"
+                    "title": "Sohee/素熙 (韩风/温柔开朗)",
+                    "value": "Sohee"
                 },
                 {
-                    "title": "【方言男声】",
+                    "title": "Ebana/诡婆婆 (恐怖/悬疑)",
+                    "value": "Ebana"
+                },
+                {
+                    "title": "【普通话-男声】",
                     "value": "_separator_3"
                 },
                 {
-                    "title": "Dylan/晓东 (北京话-胡同少年)",
-                    "value": "Dylan"
+                    "title": "Ryan/甜茶 (节奏感强/戏感炸裂)",
+                    "value": "Ryan"
                 },
                 {
-                    "title": "Marcus/秦川 (陕西话-老陕味道)",
-                    "value": "Marcus"
+                    "title": "Moon/月白 (率性帅气)",
+                    "value": "Moon"
                 },
                 {
-                    "title": "Roy/阿杰 (闽南话-诙谐直爽)",
-                    "value": "Roy"
+                    "title": "Kai/凯 (舒适磁性)",
+                    "value": "Kai"
                 },
                 {
-                    "title": "li/老李 (南京话-耐心瑜伽老师)",
-                    "value": "li"
+                    "title": "Nofish/不吃鱼 (设计师风格)",
+                    "value": "Nofish"
                 },
                 {
-                    "title": "【方言女声】",
+                    "title": "Neil/阿闻 (专业新闻主播)",
+                    "value": "Neil"
+                },
+                {
+                    "title": "Andre/安德雷 (沉稳/磁性)",
+                    "value": "Andre"
+                },
+                {
+                    "title": "Lenn/莱恩 (德国青年/理性)",
+                    "value": "Lenn"
+                },
+                {
+                    "title": "Vincent/田叔 (沙哑烟嗓/故事感)",
+                    "value": "Vincent"
+                },
+                {
+                    "title": "Eldric Sage/沧明子 (沉稳睿智老者)",
+                    "value": "Eldric Sage"
+                },
+                {
+                    "title": "Arthur/徐大爷 (质朴/奇闻异事)",
+                    "value": "Arthur"
+                },
+                {
+                    "title": "Mochi/沙小弥 (早慧小大人)",
+                    "value": "Mochi"
+                },
+                {
+                    "title": "Pip/顽屁小孩 (调皮捣蛋)",
+                    "value": "Pip"
+                },
+                {
+                    "title": "Alek/阿列克 (冷酷/暖男)",
+                    "value": "Alek"
+                },
+                {
+                    "title": "【方言/特色】",
                     "value": "_separator_4"
                 },
                 {
-                    "title": "Jada/阿珍 (上海话-沪上阿姐)",
+                    "title": "Dylan/北京-晓东 (北京胡同少年)",
+                    "value": "Dylan"
+                },
+                {
+                    "title": "Jada/上海-阿珍 (沪上阿姐)",
                     "value": "Jada"
                 },
                 {
-                    "title": "Sunny/晴儿 (四川话-甜美川妹子)",
+                    "title": "Sunny/四川-晴儿 (甜美川妹子)",
                     "value": "Sunny"
                 },
                 {
-                    "title": "【粤语】",
+                    "title": "Eric/四川-程川 (跳脱市井成都男)",
+                    "value": "Eric"
+                },
+                {
+                    "title": "Marcus/陕西-秦川 (老陕味道)",
+                    "value": "Marcus"
+                },
+                {
+                    "title": "Li/南京-老李 (瑜伽老师)",
+                    "value": "Li"
+                },
+                {
+                    "title": "Peter/天津-李彼得 (相声捧哏)",
+                    "value": "Peter"
+                },
+                {
+                    "title": "Roy/闽南-阿杰 (台湾哥仔)",
+                    "value": "Roy"
+                },
+                {
+                    "title": "Kiki/粤语-阿清 (甜美港妹)",
+                    "value": "Kiki"
+                },
+                {
+                    "title": "Rocky/粤语-阿强 (幽默陪聊)",
+                    "value": "Rocky"
+                },
+                {
+                    "title": "【外语特色】",
                     "value": "_separator_5"
                 },
                 {
-                    "title": "Lisa/丽莎 (粤语女声)",
-                    "value": "Lisa"
+                    "title": "Jennifer/詹妮弗 (美语女声/电影感)",
+                    "value": "Jennifer"
                 },
                 {
-                    "title": "Brandon/布兰登 (粤语男声)",
-                    "value": "Brandon"
+                    "title": "Aiden/艾登 (美语大男孩)",
+                    "value": "Aiden"
                 },
                 {
-                    "title": "【英语】",
-                    "value": "_separator_6"
+                    "title": "Emilien/埃米尔安 (法语大哥哥)",
+                    "value": "Emilien"
                 },
                 {
-                    "title": "Emily/艾米丽 (美式英语女声)",
-                    "value": "Emily"
+                    "title": "Bodega/博德加 (西班牙大叔)",
+                    "value": "Bodega"
                 },
                 {
-                    "title": "James/詹姆斯 (美式英语男声)",
-                    "value": "James"
+                    "title": "Sonrisa/索尼莎 (拉美大姐)",
+                    "value": "Sonrisa"
                 },
                 {
-                    "title": "Olivia/奥利维亚 (英式英语女声)",
-                    "value": "Olivia"
+                    "title": "Dolce/多尔切 (意大利大叔)",
+                    "value": "Dolce"
                 },
                 {
-                    "title": "William/威廉 (英式英语男声)",
-                    "value": "William"
-                },
-                {
-                    "title": "【日语】",
-                    "value": "_separator_7"
-                },
-                {
-                    "title": "Yuki/雪 (日语女声)",
-                    "value": "Yuki"
-                },
-                {
-                    "title": "Takeshi/武 (日语男声)",
-                    "value": "Takeshi"
-                },
-                {
-                    "title": "【韩语】",
-                    "value": "_separator_8"
-                },
-                {
-                    "title": "Minjun/敏俊 (韩语男声)",
-                    "value": "Minjun"
-                },
-                {
-                    "title": "Jihye/智慧 (韩语女声)",
-                    "value": "Jihye"
+                    "title": "Radio Gol/拉迪奥 (激情足球解说)",
+                    "value": "Radio Gol"
                 }
             ]
         },

@@ -2,6 +2,13 @@
     "identifier": "com.qwen.tts.bob.plugin",
     "appcast": [
         {
+            "version": "1.5.0",
+            "desc": "v1.5.0 更新内容：\n• 新增至 45+ 款官方音色（包括方言、多语种、特色音色）\n• 智能模型切换：选择 Flash 独占音色时自动切换模型，避免报错",
+            "sha256": "3e71e91124c3014036d8fae996f9e3e5570fc93bf93bf5466a0ee07c6bb10426",
+            "url": "https://github.com/thirteenkai/bob-plugin-qwen-tts/releases/download/v1.5.0/qwen-tts.bobplugin",
+            "minBobVersion": "1.6.0"
+        },
+        {
             "version": "1.4.0",
             "desc": "v1.4.0 更新内容：\n• 新增 25+ 种语音角色（普通话/方言/粤语/英语/日语/韩语）\n• 修复语音角色选择不生效的问题",
             "sha256": "42088fafe16815b549fd1402c32243695b716de1ead75b668e7ed97aa2210fe0",

@@ -58,6 +58,21 @@ function tts(query, completion) {
         return;
     }
 
+    // Flash 模型独占音色列表
+    var FLASH_ONLY_VOICES = [
+        'Momo', 'Vivian', 'Moon', 'Maia', 'Kai', 'Nofish', 'Bella', 'Jennifer',
+        'Ryan', 'Katerina', 'Aiden', 'Eldric Sage', 'Mia', 'Mochi', 'Bellona',
+        'Vincent', 'Bunny', 'Neil', 'Elias', 'Arthur', 'Nini', 'Ebana', 'Seren',
+        'Pip', 'Stella', 'Bodega', 'Sonrisa', 'Alek', 'Dolce', 'Sohee', 'Ono Anna',
+        'Lenn', 'Emilien', 'Andre', 'Radio Gol', 'Rocky', 'Kiki'
+    ];
+
+    // 智能模型切换：如果选择了 Flash 独占音色，强制使用 Flash 模型
+    if (FLASH_ONLY_VOICES.indexOf(voice) !== -1 && model !== 'qwen3-tts-flash') {
+        $log.info('Auto-switching model to qwen3-tts-flash for voice: ' + voice);
+        model = 'qwen3-tts-flash';
+    }
+
     // 构建请求 URL
     var baseUrl = API_ENDPOINTS[region] || API_ENDPOINTS['cn'];
     var url = baseUrl + API_PATH;
