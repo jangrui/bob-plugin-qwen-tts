@@ -23,12 +23,36 @@ function supportLanguages() {
     });
 }
 
+// 错误信息映射表
+var ERROR_MESSAGES = {
+    'InvalidApiKey': 'API Key 无效或已过期，请检查配置',
+    'Arrearage': '阿里云账户余额不足，请充值',
+    'Throttling': '请求频率过高触发限流，请稍后再试',
+    'AccessDenied': '访问被拒绝，请检查权限',
+    'BadRequest': '请求参数错误',
+    'InternalError': '阿里云服务内部错误'
+};
+
 /**
  * 语音合成主函数
  * @param {Object} query - 包含 text 和 lang 属性
  * @param {Function} completion - 回调函数
  */
 function tts(query, completion) {
+    var text = query.text || '';
+
+    // 1. 文本长度保护 (DashScope 建议单次不超过 600 字符)
+    if (text.length > 600) {
+        completion({
+            error: {
+                type: 'param',
+                message: '文本过长(' + text.length + '字符)，建议单次不超过 600 字符',
+                addition: '请尝试分段朗读'
+            }
+        });
+        return;
+    }
+
     // 检查语言支持
     if (!lang.langMap.has(query.lang)) {
         completion({
@@ -67,34 +91,33 @@ function tts(query, completion) {
         'Lenn', 'Emilien', 'Andre', 'Radio Gol', 'Rocky', 'Kiki'
     ];
 
-    // 智能模型切换：如果选择了 Flash 独占音色，强制使用 Flash 模型
+    // 智能模型切换
     if (FLASH_ONLY_VOICES.indexOf(voice) !== -1 && model !== 'qwen3-tts-flash') {
         $log.info('Auto-switching model to qwen3-tts-flash for voice: ' + voice);
         model = 'qwen3-tts-flash';
     }
 
-    // 构建请求 URL
+    // 构建请求
     var baseUrl = API_ENDPOINTS[region] || API_ENDPOINTS['cn'];
     var url = baseUrl + API_PATH;
-
-    // 获取语言类型
-    var languageType = lang.getQwenLangType(query.lang);
-
-    // 构建请求体 
     var requestBody = {
         model: model,
         input: {
-            text: query.text,
+            text: text,
             voice: voice
         }
     };
 
-    // 调试日志
-    $log.info('Qwen TTS Request URL: ' + url);
-    $log.info('Qwen TTS Request Body: ' + JSON.stringify(requestBody));
-    $log.info('Selected Voice: ' + voice + ', Model: ' + model);
+    // 2. 发送请求 (包含重试逻辑)
+    sendRequest(url, apiKey, requestBody, 0, completion);
+}
 
-    // 发送请求
+/**
+ * 发送 HTTP 请求 (带重试)
+ */
+function sendRequest(url, apiKey, body, retryCount, completion) {
+    var MAX_RETRIES = 1; // 最大自动重试次数
+
     $http.request({
         method: 'POST',
         url: url,
@@ -102,15 +125,20 @@ function tts(query, completion) {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + apiKey
         },
-        body: requestBody,
+        body: body,
         handler: function (resp) {
-            // 调试日志 - 记录响应
-            $log.info('Qwen TTS Response: ' + JSON.stringify(resp.data));
-
+            // 网络错误处理 (自动重试)
             if (resp.error) {
                 var statusCode = resp.response ? resp.response.statusCode : 0;
-                var errorType = (statusCode >= 400 && statusCode < 500) ? 'param' : 'api';
 
+                // 如果是网络超时或 5xx 错误，且未达到最大重试次数，则重试
+                if ((statusCode === 0 || statusCode >= 500) && retryCount < MAX_RETRIES) {
+                    $log.info('Network error (' + statusCode + '), retrying... (' + (retryCount + 1) + '/' + MAX_RETRIES + ')');
+                    sendRequest(url, apiKey, body, retryCount + 1, completion);
+                    return;
+                }
+
+                var errorType = (statusCode >= 400 && statusCode < 500) ? 'param' : 'api';
                 completion({
                     error: {
                         type: errorType,
@@ -123,21 +151,23 @@ function tts(query, completion) {
 
             var data = resp.data;
 
-            // 检查响应状态
+            // API 错误处理
             if (data.code && data.code !== '200' && data.code !== 200) {
+                // 尝试映射为中文错误信息
+                var friendlyMsg = ERROR_MESSAGES[data.code] || data.message || data.code;
+
                 completion({
                     error: {
                         type: 'api',
-                        message: 'API 错误: ' + (data.message || data.code),
-                        addition: JSON.stringify(data)
+                        message: friendlyMsg,
+                        addition: '错误代码: ' + data.code
                     }
                 });
                 return;
             }
 
-            // 提取音频 URL
+            // 提取音频
             var audioUrl = null;
-
             if (data.output && data.output.audio && data.output.audio.url) {
                 audioUrl = data.output.audio.url;
             } else if (data.output && data.output.url) {
@@ -155,7 +185,6 @@ function tts(query, completion) {
                 return;
             }
 
-            // 返回成功结果
             completion({
                 result: {
                     type: 'url',
