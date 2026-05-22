@@ -108,6 +108,18 @@ function tts(query, completion) {
         }
     };
 
+    // 语速调节 (自定义输入优先，否则使用预设菜单)
+    var speechRate = NaN;
+    var customRate = $option.customSpeechRate && $option.customSpeechRate.trim();
+    if (customRate) {
+        speechRate = parseFloat(customRate);
+    } else {
+        speechRate = parseFloat($option.speechRate);
+    }
+    if (!isNaN(speechRate) && speechRate >= 0.5 && speechRate <= 2.0 && speechRate !== 1.0) {
+        requestBody.input.speech_rate = speechRate;
+    }
+
     // 2. 发送请求 (包含重试逻辑)
     sendRequest(url, apiKey, requestBody, 0, completion);
 }
